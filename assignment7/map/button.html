@@ -1,1 +1,56 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        
+        <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
 
+<div id="map"></div>
+...
+<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+        <style>
+        html, body {
+        height: 100%;
+        margin:0;
+        padding:0;
+        width: 100%;
+            }
+        #map {
+            height: 100%;
+            width: 100%;
+            }
+            
+            .buttons {
+                position: absolute;
+                top:15px;
+                left:20px
+            }
+        </style>
+        
+    </head>
+    <body>
+        <div id="map"></div>
+        <div class="buttons">
+            <button class="statename">statename</button>
+            <button class="reset">reset</button>
+        </div>
+        
+    <script>
+        var annualpmLayer;
+    $(document).ready(function () {
+        cartodb.createVis('map', 'https://thenewschool.carto.com/u/patricia278/api/v2/viz/b649086a-f97e-11e6-b7a4-0e3ff518bd15/viz.json',{
+            zoom:2
+        })
+        .done (function (vis, layers) {
+            annualpmLayer= layers [1].getSubLayer (0);
+        });
+        $('.statename').click(function () {
+ annualpmLayer.setSQL(" SELECT * FROM annualpm WHERE state_name = 'Arizona'");
+});
+        $('.reset').click(function () {
+            annualpmLayer.setSQL("SELECT * FROM annualpm");
+        });
+    });
+</script>
+    </body>
+</html>
